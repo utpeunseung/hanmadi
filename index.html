@@ -1,0 +1,911 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>한마디 韓語詞卡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+KR:wght@600;800&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<style>
+/* Layout: single phone-first column, celadon-glaze accent, fixed bottom tab bar like a native app */
+:root{
+  --bg:#F2F5F3; --surface:#FFFFFF; --ink:#1C2521; --muted:#5B6B64; --line:#D5DFDA;
+  --celadon:#2F7564; --celadon-soft:#DBEAE4; --on-accent:#FFFFFF;
+  --red:#B23A2B; --red-soft:#F6E1DD; --amber:#9A6412; --amber-soft:#F5EBD8;
+  --f-kr:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111715; --surface:#19221F; --ink:#E4ECE8; --muted:#93A59D; --line:#2A3833;
+  --celadon:#78C0AB; --celadon-soft:#1D352E; --on-accent:#0E1A16;
+  --red:#E58371; --red-soft:#3A221E; --amber:#E0B060; --amber-soft:#352B19; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111715; --surface:#19221F; --ink:#E4ECE8; --muted:#93A59D; --line:#2A3833;
+  --celadon:#78C0AB; --celadon-soft:#1D352E; --on-accent:#0E1A16;
+  --red:#E58371; --red-soft:#3A221E; --amber:#E0B060; --amber-soft:#352B19; color-scheme:dark}
+
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:640px;margin:0 auto;padding-block:8px 110px;display:flex;flex-direction:column;gap:16px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding-block:12px 8px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:baseline;gap:8px}
+.brand b{font-family:var(--f-kr);font-weight:800;font-size:22px;color:var(--celadon)}
+.brand span{font-weight:700;font-size:17px}
+.duepill{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--celadon-soft);color:var(--celadon);font-weight:500;font-variant-numeric:tabular-nums}
+.duepill.zero{background:transparent;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:13px;letter-spacing:.08em;color:var(--muted);font-weight:500;margin:4px 0 0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+textarea,input[type=text],input[type=password],select{width:100%;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px}
+textarea{resize:vertical;min-height:56px}
+#q{font-family:var(--f-kr);font-size:22px;font-weight:600}
+textarea:focus,input:focus,select:focus,button:focus-visible{outline:2px solid var(--celadon);outline-offset:1px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:transparent;color:var(--muted);padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--celadon);color:var(--on-accent)}
+.btn{font:inherit;font-weight:500;border-radius:10px;padding:10px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--celadon);border-color:var(--celadon);color:var(--on-accent)}
+.btn.danger{color:var(--red);border-color:var(--red)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--muted);padding:6px 10px}
+.btn:disabled{opacity:.5;cursor:default}
+.grow{flex:1}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:var(--f-kr);font-weight:600;font-size:15px;padding:6px 12px;border-radius:999px;background:var(--bg);border:1px dashed var(--line);color:var(--ink);cursor:pointer}
+.hint{font-size:13px;color:var(--muted);margin:0}
+.status{font-size:14px;color:var(--muted)}
+.status.err{color:var(--red)}
+.word-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.word-head .kr{font-family:var(--f-kr);font-weight:800;font-size:30px;line-height:1.2;word-break:keep-all}
+.word-head .mean{font-size:16px;color:var(--muted)}
+.speak{border:1px solid var(--line);background:var(--bg);color:var(--celadon);border-radius:999px;width:36px;height:36px;cursor:pointer;font-size:16px;display:inline-grid;place-items:center}
+.md{min-width:0;overflow-wrap:anywhere}
+.md h2{font-size:16px;margin:20px 0 6px;padding-top:12px;border-top:1px solid var(--line);color:var(--celadon)}
+.md h2:first-child{margin-top:0;border-top:0;padding-top:0}
+.md h3{font-size:15px;margin:14px 0 4px}
+.md p{margin:6px 0}
+.md ul,.md ol{margin:6px 0;padding-left:22px}
+.md li{margin:3px 0}
+.md strong{font-weight:700}
+.md table{border-collapse:collapse;font-size:14px;min-width:100%}
+.md .tbl{overflow-x:auto;margin:8px 0}
+.md th,.md td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.md th{background:var(--bg)}
+.md code{background:var(--bg);border-radius:4px;padding:1px 4px}
+.md :lang(ko),.md .ko{font-family:var(--f-kr)}
+.practice{background:var(--celadon-soft);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.practice .zh{font-weight:700;font-size:17px}
+.saved-note{font-size:13px;color:var(--celadon);font-weight:500}
+
+/* review */
+.flash{min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;cursor:pointer;padding:28px 16px}
+.flash .kr{font-family:var(--f-kr);font-weight:800;font-size:40px;line-height:1.2;word-break:keep-all}
+.flash .ans{font-size:20px;font-weight:700}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.grades button{font:inherit;border-radius:10px;padding:10px 4px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.grades button small{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.grades .g0{border-color:var(--red);color:var(--red)}
+.grades .g1{border-color:var(--amber);color:var(--amber)}
+.grades .g2{border-color:var(--celadon);color:var(--celadon)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;text-align:center}
+.stat b{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+details.more summary{cursor:pointer;color:var(--celadon);font-weight:500}
+
+/* library */
+.list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-top:1px solid var(--line);cursor:pointer;background:transparent;border-left:0;border-right:0;border-bottom:0;font:inherit;color:inherit;text-align:left;width:100%}
+.item:first-child{border-top:0}
+.item .kr{font-family:var(--f-kr);font-weight:600;font-size:19px;min-width:0;word-break:keep-all}
+.item .m{color:var(--muted);font-size:14px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tag{font-size:12px;padding:2px 8px;border-radius:999px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tag.due{background:var(--red-soft);color:var(--red)}
+.tag.new{background:var(--amber-soft);color:var(--amber)}
+.tag.ok{background:var(--celadon-soft);color:var(--celadon)}
+.empty{text-align:center;color:var(--muted);padding:28px 16px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.empty .kr{font-family:var(--f-kr);font-size:34px;color:var(--celadon);font-weight:800}
+
+label.f{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500}
+.confirm{background:var(--red-soft);border-radius:10px;padding:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--surface);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+nav.tabs button{font:inherit;font-size:12px;border:0;background:transparent;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;cursor:pointer;position:relative}
+nav.tabs button .ic{font-family:var(--f-kr);font-weight:800;font-size:19px;line-height:1.1}
+nav.tabs button[aria-selected=true]{color:var(--celadon)}
+nav.tabs .badge{position:absolute;top:2px;left:calc(50% + 10px);background:var(--red);color:var(--surface);font-size:10px;border-radius:999px;padding:0 5px;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:14px;z-index:20;max-width:calc(100% - 48px)}
+@media (prefers-reduced-motion:no-preference){.flash{transition:background .15s}}
+.dirseg{align-self:flex-start}
+.waitbox{text-align:center;padding:24px 16px}
+.waitbox .big{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--celadon)}
+.flash .dirlbl{font-size:12px;color:var(--muted);letter-spacing:.05em}
+.flash .zhq{font-size:26px;font-weight:700;word-break:keep-all}
+</style>
+<meta name="theme-color" content="#2F7564">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="한마디">
+<meta name="application-name" content="한마디 韓語詞卡">
+<meta name="description" content="韓語單字解說與間隔複習詞卡">
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><b>한마디</b><span>韓語詞卡</span></div>
+    <span id="duePill" class="duepill zero">今日 0 張待複習</span>
+  </header>
+
+  <!-- LOOKUP -->
+  <section id="tab-look" data-tab="look">
+    <div class="panel">
+      <label for="q" class="hint">輸入韓文單字、片語或整句</label>
+      <textarea id="q" rows="1" placeholder="예: 눈치" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
+      <div class="row">
+        <div class="seg" role="group" aria-label="解說深度">
+          <button id="mQuick" aria-pressed="true">快速</button>
+          <button id="mDeep" aria-pressed="false">深入</button>
+        </div>
+        <span class="grow"></span>
+        <button id="stopBtn" class="btn ghost" hidden>停止</button>
+        <button id="askBtn" class="btn primary">解說</button>
+      </div>
+      <div>
+        <p class="hint" style="margin-bottom:8px">試試看：</p>
+        <div class="chips" id="chips"></div>
+      </div>
+    </div>
+    <div id="result" class="panel" hidden style="margin-top:16px">
+      <div class="word-head">
+        <span class="kr" id="rWord"></span>
+        <button class="speak" id="rSpeak" aria-label="播放發音" title="播放發音">▶</button>
+        <span class="mean" id="rMean"></span>
+      </div>
+      <div id="rStatus" class="status">思考中…</div>
+      <div id="rBody" class="md"></div>
+      <div id="rPractice" class="practice" hidden>
+        <div class="hint" style="color:var(--celadon);font-weight:500">練習：用這個詞翻成韓文</div>
+        <div class="zh" id="pZh"></div>
+        <textarea id="pAns" rows="2" placeholder="輸入你的韓文翻譯"></textarea>
+        <div class="row"><span id="pStat" class="hint"></span><span class="grow"></span><button id="pBtn" class="btn primary">批改</button></div>
+        <div id="pOut" class="md"></div>
+      </div>
+      <div class="row">
+        <span id="savedNote" class="saved-note"></span>
+        <span class="grow"></span>
+        <button id="regenBtn" class="btn ghost" hidden>重新解說</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section id="tab-rev" data-tab="rev" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="stats">
+        <div class="stat"><b id="sDue">0</b><span>今天到期</span></div>
+        <div class="stat"><b id="sWeek">0</b><span>本週新增</span></div>
+        <div class="stat"><b id="sAll">0</b><span>全部卡片</span></div>
+      </div>
+      <div id="revIdle" class="panel">
+        <div class="row">
+          <span class="hint">複習方向</span>
+          <div class="seg dirseg" role="group" aria-label="複習方向">
+            <button data-dir="fwd" aria-pressed="false">韓→中</button>
+            <button data-dir="rev" aria-pressed="false">中→韓</button>
+            <button data-dir="mix" aria-pressed="true">混合</button>
+          </div>
+        </div>
+        <div class="row">
+          <button id="startDue" class="btn primary grow">開始今日複習</button>
+          <button id="startWeek" class="btn grow">每週總複習</button>
+        </div>
+        <p class="hint">今日複習依記憶曲線排程：答得越順，下次間隔越長。「韓→中」和「中→韓」各自排程。每週總複習會把近 7 天新增或複習過的卡片再過一遍，不影響排程（按「重來」的卡片會在 10 分鐘後重新出現）。</p>
+      </div>
+      <div id="revRun" hidden style="display:flex;flex-direction:column;gap:12px">
+        <div class="row"><span id="revProg" class="status"></span><span class="grow"></span><button id="revQuit" class="btn ghost">結束</button></div>
+        <div id="flash" class="panel flash" tabindex="0" role="button" aria-label="翻面">
+          <div class="dirlbl" id="fDir"></div>
+          <div class="kr" id="fWord"></div>
+          <div class="zhq" id="fZh" hidden></div>
+          <button class="speak" id="fSpeak" aria-label="播放發音">▶</button>
+          <div id="fBack" hidden><div class="ans" id="fMean"></div></div>
+          <div class="hint" id="fTap">點一下翻面</div>
+        </div>
+        <div id="grades" class="grades" hidden>
+          <button class="g0" data-g="0">重來<small id="n0"></small></button>
+          <button class="g1" data-g="1">困難<small id="n1"></small></button>
+          <button class="g2" data-g="2">記得<small id="n2"></small></button>
+          <button class="g3" data-g="3">簡單<small id="n3"></small></button>
+        </div>
+        <details class="more" id="fMore" hidden><summary>看完整解說</summary><div class="md" id="fDetail" style="margin-top:10px"></div></details>
+      </div>
+      <div id="revWait" class="panel waitbox" hidden>
+        <div id="waitTxt"></div>
+        <div class="big" id="waitClock"></div>
+        <p class="hint">時間到會自動繼續。你也可以先離開，稍後回到「複習」再開始。</p>
+        <div class="row" style="justify-content:center"><button id="waitQuit" class="btn">先結束</button></div>
+      </div>
+      <div id="revDone" class="panel empty" hidden>
+        <div class="kr">수고했어요</div>
+        <div>這一輪複習完成了。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIBRARY -->
+  <section id="tab-lib" data-tab="lib" hidden>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <input type="text" id="libSearch" placeholder="搜尋韓文或中文">
+      <div id="libList" class="list"></div>
+      <div id="libDetail" class="panel" hidden>
+        <div class="row"><button id="libBack" class="btn ghost">← 返回列表</button></div>
+        <div class="word-head"><span class="kr" id="dWord"></span><button class="speak" id="dSpeak" aria-label="播放發音">▶</button><span class="mean" id="dMean"></span></div>
+        <div class="status" id="dInfo"></div>
+        <div class="md" id="dBody"></div>
+        <div class="row">
+          <button id="dReset" class="btn">重設進度</button>
+          <span class="grow"></span>
+          <button id="dDel" class="btn danger">刪除</button>
+        </div>
+        <div id="dConfirm" class="confirm" hidden>
+          <span class="grow">確定刪除這張卡片？無法復原。</span>
+          <button id="dNo" class="btn">取消</button><button id="dYes" class="btn danger">刪除</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="tab-set" data-tab="set" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h2 class="sec">AI 來源</h2>
+      <div class="panel">
+        <label class="f" for="provider">使用的 AI
+          <select id="provider">
+            <option value="anthropic">Anthropic Claude（預設）</option>
+            <option value="gemini">Google Gemini</option>
+            <option value="openai">OpenAI（ChatGPT）</option>
+            <option value="grok">xAI Grok</option>
+          </select>
+        </label>
+        <div id="extFields" style="display:flex;flex-direction:column;gap:12px">
+          <label class="f" for="apiKey">API 金鑰<input type="password" id="apiKey" autocomplete="off" placeholder="只存在這台裝置的瀏覽器"></label>
+          <label class="f" for="apiModel">模型名稱<input type="text" id="apiModel" autocomplete="off"></label>
+          <p class="hint" id="keyHelp"></p>
+          <div class="row"><button id="testBtn" class="btn">測試連線</button><span class="grow"></span></div>
+        </div>
+        <div id="provStatus" class="status"></div>
+      </div>
+
+      <h2 class="sec">資料</h2>
+      <div class="panel">
+        <div id="storeInfo" class="status"></div>
+        <div class="row">
+          <button id="expJson" class="btn">匯出備份（JSON）</button>
+          <button id="expAnki" class="btn">匯出給 Anki</button>
+        </div>
+        <div class="row">
+          <label class="btn" for="impFile" style="display:inline-block">匯入備份</label>
+          <input type="file" id="impFile" accept=".json,application/json" hidden>
+        </div>
+        <p class="hint">換手機或換瀏覽器時：在舊裝置「匯出備份」，把 JSON 檔傳到新裝置後「匯入備份」。同一個單字會合併，不會重複。Anki 檔是用 Tab 分隔的文字檔，在 Anki 選「檔案 → 匯入」即可，正面是韓文，背面是中文意思和解說。</p>
+        <textarea id="expFallback" rows="5" hidden readonly></textarea>
+      </div>
+
+      <h2 class="sec">加到手機桌面</h2>
+      <div class="panel">
+        <p class="hint" style="font-size:14px;color:var(--ink)">Android：用 Chrome 開啟這個網頁（建議放在自己的網址，例如 GitHub Pages），點右上角 ⋮ →「加到主畫面」。之後從桌面圖示開啟，就像一般 app。</p>
+        <p class="hint">發音使用手機內建的語音。如果按 ▶ 沒有聲音：Android 到「設定 → 系統 → 語言 → 文字轉語音輸出 → Google 語音服務 → 安裝語音資料」，下載「韓文」。</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" data-go="look" aria-selected="true"><span class="ic">찾</span>查詢</button>
+  <button role="tab" data-go="rev" aria-selected="false"><span class="ic">복</span>複習<span class="badge" id="tabBadge" hidden></span></button>
+  <button role="tab" data-go="lib" aria-selected="false"><span class="ic">단</span>詞卡庫</button>
+  <button role="tab" data-go="set" aria-selected="false"><span class="ic">설</span>設定</button>
+</nav>
+<div id="toast" class="toast" hidden></div>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const LS = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v==null ? d : JSON.parse(v); }catch{ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} }
+};
+let toastT;
+function toast(msg, ms=2400){ const t=$('toast'); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,ms); }
+/* ---------- Markdown ---------- */
+function md(text){
+  if (window.marked && window.DOMPurify){
+    const html = DOMPurify.sanitize(marked.parse(text||'', {breaks:true}));
+    const box = document.createElement('div'); box.innerHTML = html;
+    box.querySelectorAll('table').forEach(t=>{ const w=document.createElement('div'); w.className='tbl'; t.replaceWith(w); w.appendChild(t); });
+    return box.innerHTML;
+  }
+  const d=document.createElement('div'); d.textContent=text||''; return '<p style="white-space:pre-wrap">'+d.innerHTML+'</p>';
+}
+/* ---------- Prompts (Korean adaptation of the framework) ---------- */
+const BASE = `你是一位精通韓語語言學、漢字詞源，以及韓國人日常口語的韓語老師。學生的母語是繁體中文（台灣）。
+你的任務不是簡單翻譯，而是幫學生真正理解、記住並自然使用這個詞。
+
+規則：
+- 用繁體中文解說，韓文保留原文。
+- 準確、清楚、有深度，但避免冗長和重複。
+- 重點是建立韓語思維，不要機械地一對一對應中文。
+- 優先教現代韓國人真正會用的說法；不要把罕見用法當常見用法；區分本義與特定語境下的引申義。
+- 若輸入的是完整句子，先解釋整句的自然意思，再分析其中關鍵表達。
+- 若有多個讀音、詞性或同形詞，分開說明。
+- 詞源不確定就直說，不要為了拆詞而編造漢字或詞根。
+- 例句附自然的繁中翻譯。
+
+輸出格式（必須遵守）：
+- 第一行：MEANING: <最核心的中文意思，15 字以內>
+- 接著用 Markdown，每段用「## 標題」，依序寫下列段落。
+- 最後一行：PRACTICE: <一個貼近台灣人生活的中文句子，讓學生用這個詞翻成韓文；只出一題，不要給答案>`;
+
+const QUICK = `段落：
+## 核心含義 —— 最簡單準確的中文解釋，加上韓國人聽到時腦中的畫面或感覺。
+## 發音 —— 羅馬拼音；實際唸法若有音變（連音、硬音化、鼻音化、激音化、ㅎ脫落等）寫出 [實際發音] 並說明規則。
+## 詞源 —— 漢字詞請標出漢字，並比較與中文意思的異同；固有詞或外來語說明來源。
+## 例句 —— 2 句，一句日常、一句職場或社交，標明語體（해요체／반말）。
+## 記憶法 —— 一個生動的畫面或聯想。`;
+
+const DEEP = `段落：
+## 核心含義 —— 最簡單準確的中文解釋；韓國人聽到時腦中的概念、畫面或感覺；多義時說明意思之間的邏輯關係。
+## 發音 —— 羅馬拼音；實際唸法若有音變（連音、硬音化、鼻音化、激音化、ㅎ脫落等）寫出 [實際發音] 並說明規則；指出台灣學習者容易唸錯的地方。
+## 詞源與漢字 —— 漢字詞標出漢字，比較與中文的意思異同（特別是「假朋友」）；固有詞或外來語說明來源與意思演變。
+## 詞性與活用 —— 動詞／形容詞：列出 -아요/어요、-았/었어요、-(으)ㄹ 거예요、-고、-(으)니까、-는/(으)ㄴ（冠形詞形）等常用活用，注意不規則活用；名詞：常搭配的助詞與「하다／되다」形。用簡潔表格。
+## 語體與敬語 —— 同一句話分別用 합니다체、해요체、반말 說一次，說明何時用哪個。
+## 真實例句 —— 3 到 5 句，涵蓋日常聊天、職場、社交等場景，附繁中翻譯，優先道地口語。
+## 常見搭配 —— 最常用的固定搭配、句型，說明實際含義；標出日常口語特別常見的。
+## 近義詞辨析 —— 2 到 4 個容易混淆的詞，比較語氣、正式程度、使用場景與含義的細微差別，告訴我什麼時候該用這個詞。
+## 使用頻率與語感 —— 常見程度；是口語、書面語、網路用語、俚語還是專業用語；是否帶特定情緒或態度；若較少見，韓國人更常用什麼說法。
+## 記憶法 —— 一個生動的畫面、情境或邏輯。`;
+
+function buildPrompt(word, mode){
+  return `${BASE}\n\n${mode==='deep'?DEEP:QUICK}\n\n學生輸入：「${word}」`;
+}
+/* ---------- Speech ---------- */
+let koVoice=null;
+function pickVoice(){ try{ const vs=speechSynthesis.getVoices(); koVoice = vs.find(v=>/^ko[-_]KR/i.test(v.lang)) || vs.find(v=>/^ko/i.test(v.lang)) || null; return vs.length; }catch{ return 0; } }
+if('speechSynthesis' in window){ pickVoice(); speechSynthesis.addEventListener?.('voiceschanged', pickVoice); }
+const NO_KO = /Android/i.test(navigator.userAgent)
+  ? '找不到韓文語音。請到 Android「設定 → 系統 → 語言 → 文字轉語音輸出 → Google 語音服務 → 安裝語音資料」下載韓文。'
+  : '找不到韓文語音。請在系統的語音設定中安裝韓文（한국어）語音。';
+function speak(word, quiet){
+  try{
+    if(!word) return;
+    if(!('speechSynthesis' in window)) return quiet ? 0 : toast('這個瀏覽器不支援發音', 4000);
+    const n = pickVoice();
+    if(!koVoice && n){ if(!quiet) toast(NO_KO, 7000); return; }
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(word); u.lang='ko-KR'; u.rate=0.9;
+    if(koVoice) u.voice=koVoice;
+    u.onerror = ev => { if(!quiet && ev.error!=='interrupted' && ev.error!=='canceled') toast(NO_KO, 7000); };
+    speechSynthesis.speak(u);
+  }catch{ if(!quiet) toast('無法播放發音'); }
+}
+function buildCorrection(word, zh, ans){
+  return `你是韓語老師，學生母語是繁體中文（台灣）。學生正在練習「${word}」這個詞。
+題目（中文）：${zh}
+學生的韓文翻譯：${ans}
+
+請用繁體中文、Markdown 回答，簡潔：
+第一行寫：RESULT: CORRECT（意思正確、文法自然）或 RESULT: PARTIAL（大致對但有小錯）或 RESULT: WRONG（意思錯、沒用到這個詞或有明顯錯誤），只寫其中一個。
+## 批改 —— 先說整體對不對，再逐一指出文法、助詞、活用、搭配或用詞的問題（沒問題就直說很好）。
+## 更自然的說法 —— 給出 해요체 和 반말 各一個自然版本，附簡短說明為什麼這樣說更道地。
+## 下一題 —— 再出一個難度稍高、同樣用到「${word}」的中文句子（只給題目，不給答案）。最後一行寫：PRACTICE: <那個中文句子>`;
+}
+
+/* ---------- AI providers ---------- */
+const PROVIDERS = {
+  gemini:   {name:'Gemini',  model:'gemini-3.8-flash', keyUrl:'https://aistudio.google.com/apikey', keyHint:'到 Google AI Studio 免費申請金鑰（aistudio.google.com/apikey）。'},
+  openai:   {name:'OpenAI',  model:'gpt-6.1-sol',      keyUrl:'https://platform.openai.com/api-keys', keyHint:'到 platform.openai.com/api-keys 申請，需要先儲值。'},
+  anthropic:{name:'Claude',  model:'claude-sonnet-5-5', keyUrl:'https://console.anthropic.com/', keyHint:'到 console.anthropic.com 申請金鑰，需要先儲值。'},
+  grok:     {name:'Grok',    model:'grok-4.7',         keyUrl:'https://console.x.ai/', keyHint:'到 console.x.ai 申請金鑰，需要先儲值。'}
+};
+const DEAD_MODELS = ['gemini-2.0-flash','gemini-2.0-flash-lite','gemini-1.5-flash','gpt-4o-mini','gemini-3-pro-preview','gemini-3.1-flash-lite-preview'];
+let settings = Object.assign({provider:'anthropic', keys:{}, models:{}}, LS.get('kr_settings', {}));
+settings.keys = settings.keys||{}; settings.models = settings.models||{};
+if(!PROVIDERS[settings.provider]) settings.provider='anthropic';   // old 'claude' (built-in) → Claude API
+for(const p in settings.models){ if(DEAD_MODELS.includes(settings.models[p])) delete settings.models[p]; }
+const modelOf = p => settings.models[p] || PROVIDERS[p].model;
+
+async function httpJSON(url, opts, prov){
+  let r;
+  try{ r = await fetch(url, opts); }
+  catch(e){
+    if(e.name==='AbortError') throw {code:'cancelled'};
+    throw {code:'network', message:`連不到 ${PROVIDERS[prov].name} 的伺服器。請確認網路連線；若是用檔案（file://）直接開啟或被瀏覽器擋下（CORS），請把這個 app 放到自己的網址（例如 GitHub Pages）再試。`};
+  }
+  const j = await r.json().catch(()=>({}));
+  if(!r.ok){
+    const raw = (j.error && (j.error.message||(typeof j.error==='string'?j.error:''))) || j.message || '';
+    const name = PROVIDERS[prov].name;
+    let msg;
+    if(r.status===401 || r.status===403 || /api.?key|invalid.*key|permission|unauthori[sz]ed|incorrect api key/i.test(raw) && r.status<500)
+      msg = `${name} 金鑰無效或沒有權限，請到設定重新貼上金鑰。`;
+    else if(r.status===404 || /model.*(not found|does not exist|not supported)|unknown model/i.test(raw))
+      msg = `找不到模型「${modelOf(prov)}」，請到設定檢查模型名稱（清空會用預設值）。`;
+    else if(r.status===429) msg = `${name} 用量太快或額度用完了，請稍等一下或檢查帳戶餘額。`;
+    else if(r.status>=500) msg = `${name} 伺服器暫時有問題，請稍後再試。`;
+    else msg = `${name} 回傳錯誤`;
+    throw {code:'http', status:r.status, message: msg + (raw ? `（${String(raw).slice(0,160)}）` : ` (HTTP ${r.status})`)};
+  }
+  return j;
+}
+function needKey(p){ const k=(settings.keys[p]||'').trim(); if(!k) throw {code:'nokey', message:`請先到「設定」填入 ${PROVIDERS[p].name} 的 API 金鑰。`}; return k; }
+async function chatCompat(url, p, prompt, signal){
+  const key = needKey(p);
+  const j = await httpJSON(url, {method:'POST', signal,
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+    body: JSON.stringify({model: modelOf(p), messages:[{role:'user',content:prompt}]})}, p);
+  return j.choices?.[0]?.message?.content || '';
+}
+const providers = {
+  async gemini(prompt, {signal}){
+    const key = needKey('gemini');
+    const j = await httpJSON(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelOf('gemini'))}:generateContent`, {method:'POST', signal,
+      headers:{'Content-Type':'application/json','x-goog-api-key':key}, body: JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}]})}, 'gemini');
+    const t = (j.candidates?.[0]?.content?.parts||[]).filter(p=>!p.thought).map(p=>p.text||'').join('');
+    if(!t && j.promptFeedback?.blockReason) throw {code:'refused', message:'Gemini 拒絕回答這個輸入，請換個說法。'};
+    return t;
+  },
+  openai(prompt, {signal}){ return chatCompat('https://api.openai.com/v1/chat/completions', 'openai', prompt, signal); },
+  grok(prompt, {signal}){ return chatCompat('https://api.x.ai/v1/chat/completions', 'grok', prompt, signal); },
+  async anthropic(prompt, {signal}){
+    const key = needKey('anthropic');
+    const j = await httpJSON('https://api.anthropic.com/v1/messages', {method:'POST', signal,
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body: JSON.stringify({model: modelOf('anthropic'), max_tokens:8000, messages:[{role:'user',content:prompt}]})}, 'anthropic');
+    return (j.content||[]).filter(c=>c.type==='text').map(c=>c.text||'').join('');
+  }
+};
+async function askAI(prompt, opts){
+  const t = await providers[settings.provider](prompt, opts||{});
+  if(!t || !t.trim()) throw {code:'empty', message:'AI 沒有回傳內容，請再按一次。'};
+  opts?.onText?.({text:t});
+  return t;
+}
+const errText = e => e?.message || '發生錯誤，請再試一次。';
+
+/* ---------- Response parsing ---------- */
+function parseAnswer(text){
+  let meaning='', practice='', result='';
+  const lines = text.split('\n');
+  const take = re => { const i = lines.findIndex(l=>re.test(l)); if(i<0) return ''; const v = lines[i].replace(re,'').replace(/\*+\s*$/,'').trim(); lines.splice(i,1); return v; };
+  meaning = take(/^\s*\**MEANING\**\s*[:：]\s*\**/i);
+  practice = take(/^\s*\**PRACTICE\**\s*[:：]\s*\**/i);
+  result = take(/^\s*\**RESULT\**\s*[:：]\s*\**/i).toUpperCase().replace(/[^A-Z]/g,'');
+  return {meaning, practice, result, body: lines.join('\n').trim()};
+}
+
+/* ---------- Storage: localStorage only ---------- */
+const DAY = 864e5, MIN = 6e4;
+function startOfDay(t){ const d=new Date(t); d.setHours(0,0,0,0); return d.getTime(); }
+const startOfTomorrow = (now=Date.now()) => { const d=new Date(now); d.setHours(0,0,0,0); d.setDate(d.getDate()+1); return d.getTime(); };
+const endOfToday = () => startOfTomorrow();
+const norm = s => (s||'').normalize('NFC').trim().replace(/\s+/g,' ');
+const newId = () => Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const SCHED_KEYS = ['due','interval','ease','reps','lapses','lastReviewed'];
+
+// Card shape: forward (韓→中) schedule on top-level fields (backward compatible), reverse (中→韓) in card.rv
+function migrate(c){
+  const n = Object.assign({}, c);
+  n.word = norm(n.word); n.created = n.created || Date.now();
+  if(n.due==null) n.due = startOfTomorrow(n.created);
+  n.interval = n.interval||0; n.ease = n.ease||2.5; n.reps = n.reps||0; n.lapses = n.lapses||0;
+  if(!n.rv || typeof n.rv!=='object') n.rv = {due: Math.max(startOfTomorrow(n.created), startOfTomorrow()), interval:0, ease:2.5, reps:0, lapses:0};
+  if(!Array.isArray(n.practiceLog)) n.practiceLog = [];
+  return n;
+}
+const activity = c => Math.max(c.lastReviewed||0, c.rv?.lastReviewed||0, c.updated||0, c.created||0);
+function mergeCards(a, b){ // same word: keep the more-used card, keep both practice logs
+  const keep = ((b.reps||0)+(b.rv?.reps||0)) > ((a.reps||0)+(a.rv?.reps||0)) || (((b.reps||0)+(b.rv?.reps||0)) === ((a.reps||0)+(a.rv?.reps||0)) && activity(b) > activity(a)) ? b : a;
+  const other = keep===a ? b : a;
+  const logs = [...(a.practiceLog||[]), ...(b.practiceLog||[])].filter((x,i,arr)=>arr.findIndex(y=>y.t===x.t&&y.ans===x.ans)===i).sort((x,y)=>x.t-y.t);
+  return Object.assign({}, keep, {created: Math.min(a.created||Infinity, b.created||Infinity), explain: keep.explain||other.explain, meaning: keep.meaning||other.meaning, practiceLog: logs});
+}
+let cards = new Map();
+function loadCards(){
+  const byWord = new Map();
+  for(const raw of LS.get('kr_cards', [])){
+    if(!raw || !raw.word) continue;
+    const c = migrate(raw); if(!c.id) c.id = newId();
+    const k = c.word; byWord.set(k, byWord.has(k) ? mergeCards(byWord.get(k), c) : c);
+  }
+  cards = new Map([...byWord.values()].map(c=>[c.id,c]));
+  persist();
+}
+function persist(){
+  try{ localStorage.setItem('kr_cards', JSON.stringify([...cards.values()])); return true; }
+  catch(e){ toast('儲存失敗：瀏覽器空間不足，請匯出備份後刪除一些卡片。', 5000); return false; }
+}
+const store = {
+  put(card){ cards.set(card.id, card); persist(); renderAll(); },
+  del(id){ cards.delete(id); persist(); renderAll(); }
+};
+const findByWord = w => { const k=norm(w); return [...cards.values()].find(c=>c.word===k); };
+// cross-tab safety: another tab saved → reload
+window.addEventListener('storage', e=>{ if(e.key==='kr_cards'){ loadCards(); renderAll(); } });
+
+/* ---------- Spaced repetition (SM-2 style), per direction ---------- */
+const getS = (c, dir) => dir==='rev' ? c.rv : c;
+function withS(c, dir, s){ const n = Object.assign({}, c); if(dir==='rev') n.rv = Object.assign({}, c.rv, s); else Object.assign(n, s); return n; }
+function scheduleS(s, g, now=Date.now()){
+  const n = {}; let ivl = s.interval||0, ease = s.ease||2.5, reps = s.reps||0;
+  if(g===0){ n.lapses=(s.lapses||0)+1; ease=Math.max(1.3,ease-0.2); ivl=0; reps=0; n.due=now+10*MIN; }
+  else if(!reps && g===1){ ivl=0; n.due=now+30*MIN; }            // 新卡/重學中按「困難」：30 分鐘後再看一次
+  else{
+    if(!reps){ ivl = g===2 ? 1 : 4; }
+    else if(reps===1 && g===2){ ivl = 3; }
+    else if(reps===1 && g===1){ ivl = 2; }
+    else{
+      const base = Math.max(1, ivl);
+      if(g===1){ ivl = Math.max(base+1, Math.round(base*1.2)); ease=Math.max(1.3,ease-0.15); }
+      if(g===2){ ivl = Math.max(base+1, Math.round(base*ease)); }
+      if(g===3){ ivl = Math.max(base+2, Math.round(base*ease*1.3)); ease+=0.15; }
+    }
+    reps++; n.due = startOfDay(now)+ivl*DAY+4*3600e3;
+  }
+  Object.assign(n, {interval:ivl, ease:+ease.toFixed(2), reps, lastReviewed:now});
+  if(n.lapses==null) n.lapses = s.lapses||0;
+  return n;
+}
+const schedule = (c, dir, g, now) => withS(c, dir, scheduleS(getS(c,dir), g, now));
+function ivlLabel(c, dir, g){
+  const n = scheduleS(getS(c,dir), g);
+  if(g===0) return '10 分鐘';
+  if(!n.interval) return '30 分鐘';
+  const d = n.interval; return d<30 ? d+' 天' : d<365 ? Math.round(d/30)+' 個月' : (d/365).toFixed(1)+' 年';
+}
+const dirsFor = m => m==='fwd' ? ['fwd'] : m==='rev' ? ['rev'] : ['fwd','rev'];
+function dueItems(m=revDir, until=endOfToday()){
+  const out=[];
+  for(const c of cards.values()) for(const d of dirsFor(m)) if((getS(c,d).due||0) < until) out.push({id:c.id, dir:d, due:getS(c,d).due||0});
+  return out.sort((a,b)=>a.due-b.due);
+}
+const dueCount = () => dueItems('mix').length;
+const weekCards = () => { const t=Date.now()-7*DAY; return [...cards.values()].filter(c=>c.created>t || activity(c)>t && (c.lastReviewed||c.rv?.lastReviewed)); };
+
+/* ---------- Tabs ---------- */
+function go(tab){
+  document.querySelectorAll('section[data-tab]').forEach(s=>s.hidden = s.dataset.tab!==tab);
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected', b.dataset.go===tab));
+  try{ sessionStorage.setItem('kr_tab', tab); }catch{}
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>go(b.dataset.go));
+
+/* ---------- Lookup ---------- */
+let mode = LS.get('kr_mode','quick');
+function setMode(m){ mode=m; LS.set('kr_mode',m); $('mQuick').setAttribute('aria-pressed', m==='quick'); $('mDeep').setAttribute('aria-pressed', m==='deep'); }
+$('mQuick').onclick=()=>setMode('quick'); $('mDeep').onclick=()=>setMode('deep'); setMode(mode);
+['눈치','아깝다','준비','어쩔 수 없다','괜찮아요'].forEach(w=>{
+  const b=document.createElement('button'); b.className='chip'; b.textContent=w; b.lang='ko';
+  b.onclick=()=>{ if(busy) return; $('q').value=w; lookup(); }; $('chips').appendChild(b);
+});
+$('q').addEventListener('keydown', e=>{ if(e.key==='Enter' && !e.shiftKey && !e.isComposing){ e.preventDefault(); lookup(); } });
+$('q').addEventListener('input', ()=>{ $('q').style.height='auto'; $('q').style.height=Math.min(160,$('q').scrollHeight)+'px'; });
+$('askBtn').onclick=()=>lookup();
+$('regenBtn').onclick=()=>lookup({fresh:true});
+$('rSpeak').onclick=()=>speak($('rWord').textContent);
+
+let ctl=null, current=null, busy=false;
+$('stopBtn').onclick=()=>ctl?.abort();
+
+function showCardInResult(c, note){
+  $('result').hidden=false; $('rWord').textContent=c.word; $('rMean').textContent=c.meaning||'';
+  $('rStatus').hidden=true; $('rBody').innerHTML=md(c.explain);
+  setPractice(c.practice, c); $('savedNote').textContent=note||''; $('regenBtn').hidden=false;
+  current = c;
+}
+function practiceStats(c){
+  const l = c?.practiceLog||[]; if(!l.length) return '';
+  const ok = l.filter(x=>x.result==='CORRECT').length;
+  return `已練習 ${l.length} 次，答對 ${ok} 次`;
+}
+function setPractice(zh, c){
+  $('rPractice').hidden = !zh; $('pZh').textContent = zh||''; $('pAns').value=''; $('pOut').innerHTML='';
+  $('pStat').textContent = practiceStats(c);
+}
+function setBusy(b){ busy=b; $('askBtn').disabled=b; $('regenBtn').disabled=b; $('stopBtn').hidden=!b; }
+
+async function lookup({fresh=false}={}){
+  if(busy) return;                       // in-flight lock: ignore double click / double Enter
+  const word = norm($('q').value); if(!word){ $('q').focus(); return; }
+  const existing = findByWord(word);
+  if(existing && !fresh){ showCardInResult(existing, '已在詞卡庫裡'); return; }
+  setBusy(true);
+  ctl = new AbortController();
+  $('result').hidden=false; $('rWord').textContent=word; $('rMean').textContent='';
+  $('rBody').innerHTML=''; $('rStatus').hidden=false; $('rStatus').className='status'; $('rStatus').textContent='思考中…（深入模式約需半分鐘到一分鐘）';
+  setPractice(''); $('savedNote').textContent=''; $('regenBtn').hidden=true;
+  try{
+    const text = await askAI(buildPrompt(word, mode), {signal:ctl.signal});
+    const p = parseAnswer(text);
+    $('rStatus').hidden=true; $('rMean').textContent=p.meaning; $('rBody').innerHTML=md(p.body);
+    const now = Date.now();
+    const again = findByWord(word);        // re-check right before saving
+    const base = again || migrate({id:newId(), created:now, due:startOfTomorrow(now), interval:0, ease:2.5, reps:0, lapses:0});
+    const card = Object.assign({}, base, {word, meaning:p.meaning, explain:p.body, practice:p.practice, mode, updated:now});
+    store.put(card); current=card;
+    setPractice(p.practice, card);
+    $('savedNote').textContent = again ? '已更新詞卡' : '已存入詞卡庫，明天開始複習';
+    $('regenBtn').hidden=false;
+  }catch(e){
+    if(e.code==='cancelled'){ $('rStatus').hidden=false; $('rStatus').textContent='已停止，沒有存檔。'; }
+    else { $('rStatus').hidden=false; $('rStatus').className='status err'; $('rStatus').textContent=errText(e); }
+    if(existing) $('regenBtn').hidden=false;
+  }finally{ setBusy(false); }
+}
+
+let pBusy=false;
+$('pBtn').onclick = async ()=>{
+  const ans = $('pAns').value.trim(); if(!ans || !current || pBusy) return;
+  const zh = $('pZh').textContent, word = current.word;
+  pBusy=true; $('pBtn').disabled=true; $('pOut').innerHTML='<p class="status">批改中…</p>';
+  try{
+    const text = await askAI(buildCorrection(word, zh, ans), {});
+    const p = parseAnswer(text);
+    $('pOut').innerHTML = md(p.body);
+    // save result + feed scheduling
+    const c = findByWord(word);
+    if(c){
+      const now = Date.now(), result = ['CORRECT','PARTIAL','WRONG'].includes(p.result) ? p.result : 'UNKNOWN';
+      let n = Object.assign({}, c, {practiceLog:[...(c.practiceLog||[]), {t:now, zh, ans, result}].slice(-50)});
+      let note='';
+      if(result==='WRONG'){
+        const soon = now+10*MIN;
+        n = withS(n,'rev',{due:Math.min(n.rv.due||soon, soon), reps:0, lapses:(n.rv.lapses||0)+1});
+        n.due = Math.min(n.due||soon, soon);
+        note = '這題答錯了，這張卡 10 分鐘後會再出現在複習。';
+      } else if(result==='PARTIAL'){
+        const tmr = startOfTomorrow(now);
+        n = withS(n,'rev',{due:Math.min(n.rv.due||tmr, tmr)});
+        note = '有小錯誤，「中→韓」明天會再複習一次。';
+      } else if(result==='CORRECT') note = '答對了！已記錄。';
+      store.put(n); current = n;
+      $('pStat').textContent = practiceStats(n);
+      if(note){ const s=document.createElement('p'); s.className='saved-note'; s.textContent=note; $('pOut').prepend(s); }
+    }
+    if(p.practice){
+      const next = document.createElement('div'); next.className='row';
+      const b = document.createElement('button'); b.className='btn'; b.textContent='做下一題';
+      b.onclick=()=>{ $('pZh').textContent=p.practice; $('pAns').value=''; $('pOut').innerHTML=''; $('pAns').focus(); };
+      next.appendChild(b); $('pOut').appendChild(next);
+    }
+  }catch(e){ $('pOut').innerHTML='<p class="status err"></p>'; $('pOut').firstChild.textContent=errText(e); }
+  finally{ pBusy=false; $('pBtn').disabled=false; }
+};
+
+/* ---------- Review ---------- */
+let queue=[], later=[], revMode='due', curRev=null, waitT=null, gradeBusy=false;
+let revDir = LS.get('kr_revdir','mix');
+function setDir(d){ revDir=d; LS.set('kr_revdir', d); document.querySelectorAll('.dirseg button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.dir===d)); renderAll(); }
+document.querySelectorAll('.dirseg button').forEach(b=>b.onclick=()=>setDir(b.dataset.dir));
+$('startDue').onclick=()=>startReview('due');
+$('startWeek').onclick=()=>startReview('week');
+$('revQuit').onclick=()=>endReview(false);
+$('waitQuit').onclick=()=>endReview(false);
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function startReview(m){
+  revMode=m; later=[];
+  if(m==='due'){
+    const now = Date.now(), all = dueItems(revDir);
+    queue = all.filter(x=>x.due<=now); later = all.filter(x=>x.due>now);
+  } else {
+    queue = shuffle(weekCards().map(c=>({id:c.id, dir: revDir==='mix' ? (Math.random()<.5?'fwd':'rev') : revDir})));
+  }
+  if(!queue.length && !later.length){ toast(m==='due'?'今天沒有要複習的卡片':'近 7 天沒有新增或複習過的卡片'); return; }
+  $('revIdle').hidden=true; $('revDone').hidden=true; $('revRun').hidden=false; nextCard();
+}
+function endReview(done){ clearInterval(waitT); waitT=null; curRev=null; $('revRun').hidden=true; $('revWait').hidden=true; $('revIdle').hidden=false; $('revDone').hidden=!done; renderAll(); }
+function pullDue(){
+  const now=Date.now();
+  const ready = later.filter(x=>x.due<=now); later = later.filter(x=>x.due>now);
+  queue.push(...ready);
+}
+function nextCard(){
+  pullDue();
+  while(queue.length && !cards.has(queue[0].id)) queue.shift();
+  if(!queue.length){
+    later = later.filter(x=>cards.has(x.id));
+    if(!later.length) return endReview(true);
+    return showWait();
+  }
+  clearInterval(waitT); waitT=null; $('revWait').hidden=true; $('revRun').hidden=false;
+  const it = queue[0]; curRev = {card: cards.get(it.id), dir: it.dir};
+  const c = curRev.card, rev = it.dir==='rev';
+  const left = queue.length + later.length;
+  $('revProg').textContent = `${revMode==='due'?'今日複習':'每週總複習'}・剩 ${left} 張` + (later.length ? `（${later.length} 張稍後）` : '');
+  $('fDir').textContent = rev ? '中→韓：想一想韓文怎麼說' : '韓→中';
+  $('fWord').textContent=c.word; $('fWord').hidden = rev;
+  $('fZh').textContent=c.meaning||'(沒有中文意思)'; $('fZh').hidden = !rev;
+  $('fSpeak').hidden = rev;
+  $('fMean').textContent = rev ? '' : (c.meaning||'');
+  $('fBack').hidden=true; $('fTap').hidden=false; $('grades').hidden=true; $('fMore').hidden=true; $('fMore').open=false;
+  $('fDetail').innerHTML='';
+  [0,1,2,3].forEach(g=>$('n'+g).textContent = revMode==='due' ? ivlLabel(c,it.dir,g) : (g===0?'10 分鐘':'不變'));
+}
+function showWait(){
+  $('revRun').hidden=true; $('revWait').hidden=false; curRev=null;
+  const tick=()=>{
+    const next = Math.min(...later.map(x=>x.due)), ms = Math.max(0, next-Date.now());
+    $('waitTxt').textContent = `${later.length} 張稍後再複習`;
+    const s=Math.ceil(ms/1000); $('waitClock').textContent = `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+    if(ms<=0){ clearInterval(waitT); waitT=null; nextCard(); }
+  };
+  clearInterval(waitT); waitT=setInterval(tick, 1000); tick();
+}
+function flip(){
+  if(!curRev || !$('fBack').hidden) return;
+  const c = curRev.card;
+  if(curRev.dir==='rev'){ $('fWord').hidden=false; $('fSpeak').hidden=false; speak(c.word, true); }
+  $('fBack').hidden=false; $('fTap').hidden=true; $('grades').hidden=false; $('fMore').hidden=false;
+  $('fDetail').innerHTML = md(c.explain);
+}
+$('flash').onclick=e=>{ if(e.target.closest('.speak')) return; flip(); };
+$('flash').onkeydown=e=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); flip(); } };
+$('fSpeak').onclick=()=>speak(curRev?.card.word||'');
+$('grades').onclick=e=>{
+  const b=e.target.closest('button[data-g]'); if(!b||!curRev||gradeBusy) return;
+  gradeBusy=true;
+  try{
+    const g=+b.dataset.g, it=queue.shift(), now=Date.now();
+    const c = cards.get(it.id) || curRev.card;
+    let updated;
+    if(revMode==='due') updated = schedule(c, it.dir, g, now);
+    else updated = g===0 ? withS(c, it.dir, {due:now+10*MIN, lastReviewed:now}) : withS(c, it.dir, {lastReviewed:now});
+    const nd = getS(updated, it.dir).due;
+    if(g===0 || (revMode==='due' && nd < endOfToday() && nd-now < 60*MIN)) later.push({id:it.id, dir:it.dir, due: g===0 ? now+10*MIN : nd});
+    store.put(updated);
+    nextCard();
+  } finally { gradeBusy=false; }
+};
+document.addEventListener('keydown', e=>{
+  if($('revRun').hidden || /INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName)) return;
+  if(!$('grades').hidden && ['1','2','3','4'].includes(e.key)) $('grades').querySelector(`[data-g="${+e.key-1}"]`).click();
+});
+
+/* ---------- Library ---------- */
+let libSel=null;
+$('libSearch').oninput=()=>renderLib();
+$('libBack').onclick=()=>{ libSel=null; renderLib(); };
+$('dSpeak').onclick=()=>speak($('dWord').textContent);
+$('dDel').onclick=()=>{ $('dConfirm').hidden=false; };
+$('dNo').onclick=()=>{ $('dConfirm').hidden=true; };
+$('dYes').onclick=()=>{ const id=libSel; libSel=null; $('dConfirm').hidden=true; store.del(id); toast('已刪除'); };
+$('dReset').onclick=()=>{ const c=cards.get(libSel); if(!c) return; const now=Date.now();
+  store.put(Object.assign({},c,{due:now,interval:0,ease:2.5,reps:0, rv:{due:now,interval:0,ease:2.5,reps:0,lapses:c.rv?.lapses||0}})); toast('已重設，今天會出現在複習'); };
+function tagFor(c){
+  const nd = Math.min(c.due||0, c.rv?.due||0);
+  if(!c.reps && !c.lastReviewed && !c.rv?.lastReviewed) return nd < endOfToday() ? '<span class="tag due">待複習</span>' : '<span class="tag new">新卡</span>';
+  if(nd < endOfToday()) return '<span class="tag due">待複習</span>';
+  const d=Math.ceil((nd-Date.now())/DAY); return `<span class="tag ok">${d} 天後</span>`;
+}
+function esc(s){ const d=document.createElement('div'); d.textContent=s??''; return d.innerHTML; }
+function renderLib(){
+  const sel = libSel && cards.get(libSel);
+  $('libDetail').hidden = !sel; $('libList').hidden = !!sel; $('libSearch').hidden = !!sel;
+  if(sel){
+    $('dWord').textContent=sel.word; $('dMean').textContent=sel.meaning||'';
+    const fmt = t=>new Date(t).toLocaleDateString('zh-TW');
+    const ps = practiceStats(sel);
+    $('dInfo').textContent = `${fmt(sel.created)} 新增・韓→中 複習 ${sel.reps||0} 次、下次 ${fmt(sel.due||Date.now())}・中→韓 複習 ${sel.rv?.reps||0} 次、下次 ${fmt(sel.rv?.due||Date.now())}・忘記 ${(sel.lapses||0)+(sel.rv?.lapses||0)} 次` + (ps ? '・'+ps : '');
+    $('dBody').innerHTML = md(sel.explain);
+    return;
+  }
+  const q = $('libSearch').value.trim().toLowerCase();
+  const list = [...cards.values()].filter(c=>!q || c.word.toLowerCase().includes(q) || (c.meaning||'').toLowerCase().includes(q))
+    .sort((a,b)=>b.created-a.created);
+  if(!cards.size){ $('libList').innerHTML = `<div class="empty"><div class="kr">텅 비었어요</div><div>還沒有詞卡。到「查詢」輸入第一個韓文單字，解說完成後會自動存進這裡。</div></div>`; return; }
+  if(!list.length){ $('libList').innerHTML = `<div class="empty"><div>找不到「${esc(q)}」</div></div>`; return; }
+  $('libList').innerHTML = list.map(c=>`<button class="item" data-id="${esc(c.id)}"><span class="kr" lang="ko">${esc(c.word)}</span><span class="m">${esc(c.meaning)}</span>${tagFor(c)}</button>`).join('');
+}
+$('libList').onclick=e=>{ const b=e.target.closest('.item'); if(b){ libSel=b.dataset.id; renderLib(); window.scrollTo(0,0);} };
+
+/* ---------- Header / stats ---------- */
+function renderAll(){
+  const due = dueCount(), dueSel = dueItems(revDir).length;
+  $('duePill').textContent = due ? `今日 ${due} 張待複習` : '今天複習完了';
+  $('duePill').className = 'duepill'+(due?'':' zero');
+  $('tabBadge').hidden = !due; $('tabBadge').textContent = due;
+  $('sDue').textContent=due; $('sAll').textContent=cards.size;
+  $('sWeek').textContent=[...cards.values()].filter(c=>c.created>Date.now()-7*DAY).length;
+  $('startDue').textContent = dueSel ? `開始今日複習（${dueSel}）` : '今天沒有到期的卡片';
+  $('startDue').disabled = !dueSel;
+  renderLib();
+  $('storeInfo').textContent = `${cards.size} 張詞卡，存在這台裝置的瀏覽器裡（換手機或清除瀏覽器資料不會跟著走）。建議定期匯出備份。`;
+}
+$('duePill').onclick=()=>go('rev');
+setInterval(()=>{ if($('revRun').hidden && $('revWait').hidden) renderAll(); }, 60e3);
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && $('revRun').hidden && $('revWait').hidden) renderAll(); });
+
+/* ---------- Settings ---------- */
+function renderSettings(){
+  const p = settings.provider;
+  $('provider').value=p;
+  $('apiKey').value=settings.keys[p]||''; $('apiModel').value=settings.models[p]||''; $('apiModel').placeholder='預設：'+PROVIDERS[p].model;
+  $('keyHelp').textContent = PROVIDERS[p].keyHint + ' 金鑰只存在這台裝置的瀏覽器，不會上傳到別處（只會送給你選的 AI 公司）。模型名稱留空會用預設值。';
+  $('provStatus').className='status';
+  $('provStatus').textContent = settings.keys[p] ? `目前使用 ${PROVIDERS[p].name}（${modelOf(p)}）。` : `還沒填 ${PROVIDERS[p].name} 金鑰。`;
+}
+function saveSettings(){ LS.set('kr_settings', settings); }
+$('provider').onchange=()=>{ settings.provider=$('provider').value; saveSettings(); renderSettings(); toast('已切換 AI'); };
+$('apiKey').onchange=()=>{ settings.keys[settings.provider]=$('apiKey').value.trim(); saveSettings(); renderSettings(); toast('金鑰已存在這台裝置'); };
+$('apiModel').onchange=()=>{ settings.models[settings.provider]=$('apiModel').value.trim(); saveSettings(); renderSettings(); };
+$('testBtn').onclick=async()=>{
+  settings.keys[settings.provider]=$('apiKey').value.trim(); settings.models[settings.provider]=$('apiModel').value.trim(); saveSettings();
+  $('testBtn').disabled=true; $('provStatus').className='status'; $('provStatus').textContent='測試中…';
+  try{ await askAI('請只回覆「OK」。', {}); $('provStatus').textContent=`連線成功：${PROVIDERS[settings.provider].name}（${modelOf(settings.provider)}）可以使用。`; }
+  catch(e){ $('provStatus').className='status err'; $('provStatus').textContent=errText(e); }
+  finally{ $('testBtn').disabled=false; }
+};
+
+/* ---------- Export / import ---------- */
+function offerFile(filename, data, type='application/json'){
+  try{
+    const url = URL.createObjectURL(new Blob([data], {type:type+';charset=utf-8'}));
+    const a = document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 4000);
+    toast('已下載 '+filename);
+  }catch{
+    const t=$('expFallback'); t.hidden=false; t.value=data; t.select();
+    navigator.clipboard?.writeText(data).then(()=>toast('無法直接下載，已複製到剪貼簿'), ()=>toast('無法直接下載，請手動複製下方內容'));
+  }
+}
+const stamp = ()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
+$('expJson').onclick=()=>offerFile(`hanmadi-backup-${stamp()}.json`, JSON.stringify({app:'hanmadi', version:2, exported:Date.now(), cards:[...cards.values()]}, null, 1));
+$('expAnki').onclick=()=>{
+  const clean = s=>(s||'').replace(/\t/g,' ').replace(/\r?\n/g,'<br>');
+  const rows = [...cards.values()].map(c=>[c.word, `<b>${clean(c.meaning)}</b><br><br>${clean(window.marked? DOMPurify.sanitize(marked.parse(c.explain||'')) : c.explain)}`].join('\t'));
+  offerFile(`hanmadi-anki-${stamp()}.txt`, '#separator:tab\n#html:true\n'+rows.join('\n'), 'text/plain');
+};
+$('impFile').onchange=async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  try{
+    const j = JSON.parse(await f.text()); const list = Array.isArray(j)?j:j.cards;
+    if(!Array.isArray(list)) throw 0;
+    let added=0, merged=0;
+    for(const raw of list){
+      if(!raw || !raw.word) continue;
+      const c = migrate(raw); if(!c.id) c.id=newId();
+      const ex = findByWord(c.word) || cards.get(c.id);
+      if(ex){ const m = mergeCards(ex, c); if(m.id!==ex.id) cards.delete(ex.id); cards.set(m.id, m); merged++; }
+      else { cards.set(c.id, c); added++; }
+    }
+    persist(); renderAll();
+    toast(`已匯入：新增 ${added} 張、合併 ${merged} 張`);
+  }catch{ toast('檔案格式不對，請選擇從這裡匯出的 JSON 備份。'); }
+  e.target.value='';
+};
+
+/* ---------- Home-screen manifest ---------- */
+function makeIcon(size){
+  const c=document.createElement('canvas'); c.width=c.height=size; const x=c.getContext('2d');
+  x.fillStyle='#2F7564'; x.fillRect(0,0,size,size);
+  x.fillStyle='#fff'; x.font=`800 ${Math.round(size*0.5)}px "Noto Serif KR","Apple SD Gothic Neo",serif`;
+  x.textAlign='center'; x.textBaseline='middle'; x.fillText('한', size/2, size*0.53);
+  return c.toDataURL('image/png');
+}
+try{
+  const i192=makeIcon(192), i512=makeIcon(512);
+  const start = location.href.split('#')[0];
+  const man = {name:'한마디 韓語詞卡', short_name:'한마디', start_url:start, scope:start.replace(/[^/]*$/,''), display:'standalone', background_color:'#F2F5F3', theme_color:'#2F7564', lang:'zh-TW',
+    icons:[{src:i192,sizes:'192x192',type:'image/png',purpose:'any'},{src:i512,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
+  const l=document.createElement('link'); l.rel='manifest'; l.href='data:application/manifest+json;charset=utf-8,'+encodeURIComponent(JSON.stringify(man)); document.head.appendChild(l);
+  const a=document.createElement('link'); a.rel='apple-touch-icon'; a.href=i192; document.head.appendChild(a);
+  const fi=document.createElement('link'); fi.rel='icon'; fi.href=i192; document.head.appendChild(fi);
+}catch(e){ console.warn('manifest', e); }
+
+/* ---------- Boot ---------- */
+loadCards(); setDir(revDir); renderSettings(); renderAll();
+try{ const t=sessionStorage.getItem('kr_tab'); if(t) go(t); }catch{}
+})();
+</script>
+</body></html>
